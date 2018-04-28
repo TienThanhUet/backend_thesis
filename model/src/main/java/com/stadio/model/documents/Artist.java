@@ -31,4 +31,7 @@ public class Artist {
 
     @Field(value = "knownForTitles")
     private String knownForTitles;
+
+    @Field(value = "description")
+    private String description;
 }

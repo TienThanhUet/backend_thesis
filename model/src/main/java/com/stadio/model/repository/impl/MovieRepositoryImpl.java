@@ -24,10 +24,8 @@ public class MovieRepositoryImpl implements MovieRepositoryCustom {
     public List<Movie> topTypeMovie(String type) {
         Query query = new Query();
         query.addCriteria(Criteria.where("titleType").is("movie"));
-        query.addCriteria(Criteria.where("genres").regex(type).orOperator(
-                Criteria.where("region").is("US"),Criteria.where("region").is("GB")
-        ));
-        query.with(new Sort(Sort.Direction.DESC,"numVotes"));
+        query.addCriteria(Criteria.where("genres").regex(type));
+        query.with(new Sort(Sort.Direction.DESC,"averageRating"));
         query.limit(25);
 
         List<Movie> movieList = mongoTemplate.find(query,Movie.class);
@@ -39,7 +37,7 @@ public class MovieRepositoryImpl implements MovieRepositoryCustom {
     public List<Movie> listMovieType(Integer page, Integer pageSize,String type) {
         Query query = new Query();
         query.addCriteria(Criteria.where("genres").regex(type));
-        query.with(new Sort(Sort.Direction.DESC,"startYear","averageRating"));
+        query.with(new Sort(Sort.Direction.DESC,"startYear","numVotes","averageRating"));
         final Pageable pageableRequest = new PageRequest(page - 1, pageSize);
         query.with(pageableRequest);
 

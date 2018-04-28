@@ -5,7 +5,7 @@ import com.stadio.model.esDocuments.MovieES;
 import lombok.Data;
 
 @Data
-public class MovieItemDTO {
+public class MovieESItemDTO {
 
     private String id;
 
@@ -15,25 +15,21 @@ public class MovieItemDTO {
 
     private String image;
 
-    private String runtimeMinutes;
-
-    private double averageRating;
-
-    private long numVotes;
-
     private Integer startYear;
 
-    public static  MovieItemDTO with(Movie movie){
-        MovieItemDTO movieItemDTO = new MovieItemDTO();
+    private String runtimeMinutes;
 
+    private Long numVotes;
+
+    public static MovieESItemDTO with(MovieES movie){
+        MovieESItemDTO movieItemDTO = new MovieESItemDTO();
         movieItemDTO.setId(movie.getId());
         movieItemDTO.setTconst(movie.getTconst());
         movieItemDTO.setPrimaryTitle(movie.getPrimaryTitle());
         movieItemDTO.setImage(movie.getImage());
         movieItemDTO.setRuntimeMinutes(movie.getRuntimeMinutes());
-        movieItemDTO.setAverageRating(movie.getAverageRating());
-        movie.setNumVotes(movie.getNumVotes());
         movieItemDTO.setStartYear(movie.getStartYear());
+        movieItemDTO.setNumVotes(movie.getNumVotes());
         return movieItemDTO;
     }
 }

@@ -22,7 +22,7 @@ public class ArtistRedisRepositoryImpl implements ArtistRedisRepository {
         redisRepository.select(RedisConst.DB_ARTIST);
         String key = RedisConst.ARTIST_DETAILS;
         redisRepository.hput(key, artist.getNconst(), JsonUtils.pretty(ArtistDetailsDTO.newInstance(artist)));
-        redisRepository.expire(key,RedisConst.TIME_TO_LIVE_LONG);
+        redisRepository.expire(key,RedisConst.TIME_TO_LIVE_SHORT);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ArtistRedisRepositoryImpl implements ArtistRedisRepository {
         artistList.forEach(artist -> {
             redisRepository.hput(key, artist.getNconst(), JsonUtils.pretty(ArtistDetailsDTO.newInstance(artist)));
         });
-        redisRepository.expire(key,RedisConst.TIME_TO_LIVE_LONG);
+        redisRepository.expire(key,RedisConst.TIME_TO_LIVE_SHORT);
     }
 
     @Override

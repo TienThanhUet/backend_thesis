@@ -24,7 +24,7 @@ public class MovieRedisRepositoryImpl implements MovieRedisRepository {
         redisRepository.select(RedisConst.DB_MOVIE);
         String key = RedisConst.MOVIE_DETAILS;
         redisRepository.hput(key, movie.getTconst(), JsonUtils.pretty(MovieDetailsDTO.newInstance(movie)));
-        redisRepository.expire(key,RedisConst.TIME_TO_LIVE_LONG);
+        redisRepository.expire(key,RedisConst.TIME_TO_LIVE_SHORT);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MovieRedisRepositoryImpl implements MovieRedisRepository {
         movieList.forEach(movie -> {
             redisRepository.hput(key, movie.getTconst(), JsonUtils.pretty(MovieDetailsDTO.newInstance(movie)));
         });
-        redisRepository.expire(key,RedisConst.TIME_TO_LIVE_LONG);
+        redisRepository.expire(key,RedisConst.TIME_TO_LIVE_SHORT);
     }
 
     @Override

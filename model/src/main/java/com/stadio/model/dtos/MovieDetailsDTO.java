@@ -17,6 +17,8 @@ public class MovieDetailsDTO {
 
     private String trailer;
 
+    private String imageTrailer;
+
     private String storyline;
 
     private String region;
@@ -29,18 +31,20 @@ public class MovieDetailsDTO {
 
     private String genres;
 
-    private Long averageRating;
+    private double averageRating;
 
     private Long numVotes;
 
     public static MovieDetailsDTO newInstance(Movie movie) {
         MovieDetailsDTO movieDetailsDTO = new MovieDetailsDTO();
+
         movieDetailsDTO.setId(movie.getId());
         movieDetailsDTO.setTconst(movie.getTconst());
         movieDetailsDTO.setTitleType(movie.getTitleType());
         movieDetailsDTO.setPrimaryTitle(movie.getPrimaryTitle());
         movieDetailsDTO.setImage(movie.getImage());
         movieDetailsDTO.setTrailer(movie.getTrailer());
+        movieDetailsDTO.setImageTrailer(movie.getImageTrailer());
         movieDetailsDTO.setStoryline(movie.getStoryline());
         movieDetailsDTO.setRegion(movie.getRegion());
         movieDetailsDTO.setIsAdult(movie.getIsAdult());
@@ -49,6 +53,7 @@ public class MovieDetailsDTO {
         movieDetailsDTO.setGenres(movie.getGenres());
         movieDetailsDTO.setAverageRating(movie.getAverageRating());
         movieDetailsDTO.setNumVotes(movie.getNumVotes());
+
         return movieDetailsDTO;
 
     }

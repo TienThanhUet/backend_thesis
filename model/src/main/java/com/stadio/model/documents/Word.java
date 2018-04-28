@@ -1,7 +1,9 @@
 package com.stadio.model.documents;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,34 +11,72 @@ import java.util.Map;
 @Data
 @Document(collection = "tab_word")
 public class Word {
-    String word;
-    long countAppear;
-    Map<String,Integer> appearDoc;
-    int wordIdx;
+    @Id
+    String id;
 
-    public Word(){
-        word ="";
-        countAppear =0;
-        wordIdx = 0 ;
-        appearDoc = new HashMap<>();
+    @Field(value = "wordStr")
+    String wordStr;
+
+    @Field(value = "docAppear")
+    long docAppear;
+
+    @Field(value = "docAppearStr")
+    String docAppearStr;
+
+    @Field(value = "countAppear")
+    Map<String,Integer> countAppear;
+
+    @Field(value = "wordIdx")
+    long wordIdx;
+
+    @Field(value = "idf")
+    double idf;
+
+    public Word(String wordStr){
+        this.wordStr = wordStr;
+        this.docAppear =0;
+        this.wordIdx = 0 ;
+        this.docAppearStr = "";
+        this.countAppear = new HashMap<>();
+        this.idf=0;
+
     }
 
-    public Word(String word, long countAppear, int wordIdx) {
-        this.word = word;
-        this.countAppear = countAppear;
-        this.wordIdx = wordIdx;
-        appearDoc = new HashMap<>();
+    public void incrementDocAppear(){
+        docAppear+=1;
     }
 
-    public void incrementCountAppear(){
-        countAppear+=1;
+    public void addDocAppear(String tconst){
+        docAppearStr = docAppearStr+" "+tconst;
     }
 
-    public void addAppearInDoc(String tconst){
-        if(appearDoc.containsKey(tconst)){
-            appearDoc.put(tconst,appearDoc.get(tconst) + 1);
+    public void incrementCountAppear(String tconst){
+        if(countAppear.containsKey(tconst)){
+            countAppear.put(tconst,countAppear.get(tconst) + 1);
         }else{
-            appearDoc.put(tconst,1);
+            countAppear.put(tconst,1);
         }
     }
+
+    public void incrementCountAppearInTitle(String tconst){
+        if(countAppear.containsKey(tconst)){
+            countAppear.put(tconst,countAppear.get(tconst) + 3);
+        }else{
+            countAppear.put(tconst,3);
+        }
+    }
+
+    public void incrementCountAppearInGenres(String tconst){
+        if(countAppear.containsKey(tconst)){
+            countAppear.put(tconst,countAppear.get(tconst) + 2);
+        }else{
+            countAppear.put(tconst,2);
+        }
+    }
+
+    public boolean checkDocAppearWord(String tconst){
+        return countAppear.containsKey(tconst);
+    }
+
+
 }

@@ -13,7 +13,6 @@ public class Movie {
     private String id;
 
     @Field(value = "tconst")
-    @Indexed(unique=true)
     private String tconst;
 
     @Field(value = "titleType")
@@ -27,6 +26,9 @@ public class Movie {
 
     @Field(value = "trailer")
     private String trailer;
+
+    @Field(value = "imageTrailer")
+    private String imageTrailer;
 
     @Field(value = "storyline")
     private String storyline;
@@ -47,7 +49,7 @@ public class Movie {
     private String genres;
 
     @Field(value = "averageRating")
-    private Long averageRating;
+    private double averageRating;
 
     @Field(value = "numVotes")
     private Long numVotes;

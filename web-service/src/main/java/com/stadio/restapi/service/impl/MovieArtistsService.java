@@ -38,7 +38,7 @@ public class MovieArtistsService implements IMovieArtistsService {
                     movieArtistItemDTO.setNconst(artist.getNconst());
                     movieArtistItemDTO.setName(artist.getPrimaryName());
                     movieArtistItemDTO.setCategory(movieArtist.getCategory());
-                    movieArtistItemDTO.setCharacters(movieArtist.getCharacters().substring(2,movieArtist.getCharacters().length()));
+                    movieArtistItemDTO.setCharacters(movieArtist.getCharacters().substring(2,movieArtist.getCharacters().length()-3));
                     movieArtistItemDTO.setImage(artist.getImage());
                     movieArtistItemDTOS.add(movieArtistItemDTO);
                 }
