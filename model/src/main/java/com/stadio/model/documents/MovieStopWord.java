@@ -16,6 +16,9 @@ public class MovieStopWord {
     @Indexed(unique = true)
     private String tconst;
 
+    @Field(value = "type")
+    private String type;
+
     @Field(value = "title")
     private String title;
 

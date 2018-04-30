@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.stadio</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>backend-thesis</artifactId>
     <packaging>pom</packaging>
     <version>${service-version}</version>
 
