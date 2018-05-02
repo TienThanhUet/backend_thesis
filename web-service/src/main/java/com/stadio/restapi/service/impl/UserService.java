@@ -5,20 +5,22 @@ import com.stadio.common.service.PasswordService;
 import com.stadio.common.utils.ResponseCode;
 import com.stadio.common.utils.RoleType;
 import com.stadio.common.utils.StringUtils;
+import com.stadio.model.documents.Movie;
 import com.stadio.model.documents.User;
 import com.stadio.model.documents.SSOAccessToken;
+import com.stadio.model.documents.UserHistory;
+import com.stadio.model.dtos.MovieItemDTO;
 import com.stadio.model.dtos.UserDTO;
 import com.stadio.model.dtos.UserDetailDTO;
+import com.stadio.model.repository.MovieRepository;
+import com.stadio.model.repository.UserHistoryRepository;
 import com.stadio.model.repository.UserRepository;
 import com.stadio.restapi.response.ResponseResult;
 import com.stadio.restapi.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -27,6 +29,12 @@ public class UserService extends BaseService implements IUserService
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserHistoryRepository userHistoryRepository;
+
+    @Autowired
+    MovieRepository movieRepository;
 
     @Override
     public ResponseResult processCreateNewUser( UserDTO userDTO)
@@ -125,7 +133,57 @@ public class UserService extends BaseService implements IUserService
 
         return ResponseResult.newInstance(ResponseCode.SUCCESS, getMessage("user.success.update"), new UserDetailDTO(user));
     }
-    
+
+    @Override
+    public ResponseResult getMovieHistory(String token) {
+        User user = getCurrentUser(token);
+        List<UserHistory> userHistoryList= userHistoryRepository.findByUserIdOrderByCreateDateDesc(user.getId());
+        List<MovieItemDTO> movieItemDTOList = new LinkedList<>();
+        if(userHistoryList!=null){
+            userHistoryList.forEach(userHistory -> {
+                Movie movie = movieRepository.findFirstByTconst(userHistory.getTconst());
+                if(movie!=null){
+                    movieItemDTOList.add(MovieItemDTO.with(movie));
+                }
+            });
+        }
+        return ResponseResult.newSuccessInstance(movieItemDTOList);
+    }
+
+    @Override
+    public ResponseResult addMovieHistory(String tconst,String token) {
+        User user = getCurrentUser(token);
+        List<UserHistory> userHistoryList= userHistoryRepository.findByUserIdOrderByCreateDateDesc(user.getId());
+
+        UserHistory userHistory = new UserHistory();
+        userHistory.setUserId(user.getId());
+        userHistory.setTconst(tconst);
+        userHistory.setCreateDate(new Date());
+
+        if(userHistoryList==null||userHistoryList.size()==0)
+        {
+            userHistoryRepository.save(userHistory);
+            return ResponseResult.newSuccessInstance("add movie to history success");
+        }
+
+        boolean exists = false;
+        for(int pos=0;pos<userHistoryList.size();pos++){
+            if(userHistoryList.get(pos).equalsMovieHistory(userHistory)){
+                exists =true;
+                break;
+            }
+        }
+
+        if(!exists){
+            if(userHistoryList.size()>20){
+                UserHistory userHistoryRemove = userHistoryList.get(userHistoryList.size()-1);
+                userHistoryRepository.delete(userHistoryRemove.getId());
+            }
+            userHistoryRepository.save(userHistory);
+        }
+        return ResponseResult.newSuccessInstance("add movie to history success");
+    }
+
 
     @Override
     public ResponseResult processChangePassword(String token, String oldPass, String newPass)

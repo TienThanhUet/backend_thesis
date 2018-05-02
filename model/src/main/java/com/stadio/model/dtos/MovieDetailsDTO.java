@@ -35,6 +35,8 @@ public class MovieDetailsDTO {
 
     private Long numVotes;
 
+    private double totalScore;
+
     public static MovieDetailsDTO newInstance(Movie movie) {
         MovieDetailsDTO movieDetailsDTO = new MovieDetailsDTO();
 
@@ -53,6 +55,7 @@ public class MovieDetailsDTO {
         movieDetailsDTO.setGenres(movie.getGenres());
         movieDetailsDTO.setAverageRating(movie.getAverageRating());
         movieDetailsDTO.setNumVotes(movie.getNumVotes());
+        movieDetailsDTO.setTotalScore(movie.getTotalScore());
 
         return movieDetailsDTO;
 

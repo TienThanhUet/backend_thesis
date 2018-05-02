@@ -53,4 +53,7 @@ public class Movie {
 
     @Field(value = "numVotes")
     private Long numVotes;
+
+    @Field(value = "totalScore")
+    private double totalScore;
 }

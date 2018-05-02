@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface MovieRepository extends MongoRepository<Movie,String> , MovieRepositoryCustom {
         List<Movie> findByTconst(String tconst);
+
+        Movie findFirstByTconst(String tconst);
 }

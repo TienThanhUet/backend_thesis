@@ -13,7 +13,6 @@ public class MovieStopWord {
     private String id;
 
     @Field(value = "tconst")
-    @Indexed(unique = true)
     private String tconst;
 
     @Field(value = "type")

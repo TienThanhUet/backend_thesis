@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface MovieTopRedisRepository {
 
-    void ProcessPutTopMovieType(String type,List<Movie> movieList);
+    void processPutTopMovie(List<Movie> movieList);
 
-    Map<String,String> ProcessGetTopMovieType(String type);
+    Map<String,String> processGetTopMovie();
 }

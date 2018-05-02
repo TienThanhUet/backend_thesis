@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface MovieRepositoryCustom {
 
-    List<Movie> topTypeMovie(String type);
+    List<Movie> topMovie();
+
+    List<Movie> highlightTypeMovie(String type);
 
     List<Movie> listMovieType(Integer page, Integer pageSize,String type);
 

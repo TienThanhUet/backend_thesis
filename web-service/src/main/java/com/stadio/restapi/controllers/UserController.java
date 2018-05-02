@@ -52,4 +52,17 @@ public class UserController {
         User user = userService.getCurrentUser(token);
         return ResponseResult.newInstance("00", "", user);
     }
+
+    @RequestMapping(value = "/user-history",method = RequestMethod.GET)
+    public ResponseResult getMovieHistory(
+            @RequestHeader(value = "Authorization") String token){
+        return userService.getMovieHistory(token);
+    }
+
+    @RequestMapping(value = "/user-history/add",method = RequestMethod.POST)
+    public ResponseResult addMovieHistory(
+            @RequestHeader(value = "Authorization") String token,
+            @RequestParam(value = "tconst") String tconst){
+        return userService.addMovieHistory(tconst,token);
+    }
 }

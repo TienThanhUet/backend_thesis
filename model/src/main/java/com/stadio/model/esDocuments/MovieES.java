@@ -1,5 +1,6 @@
 package com.stadio.model.esDocuments;
 
+import com.stadio.model.documents.Movie;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -29,4 +30,16 @@ public class MovieES {
 
     @Field(type = FieldType.Long)
     private Long numVotes;
+
+    public MovieES() {
+    }
+
+    public MovieES(Movie movie) {
+        tconst = movie.getTconst();
+        primaryTitle = movie.getPrimaryTitle();
+        image = movie.getImage();
+        startYear = movie.getStartYear();
+        runtimeMinutes = movie.getRuntimeMinutes();
+        numVotes = movie.getNumVotes();
+    }
 }

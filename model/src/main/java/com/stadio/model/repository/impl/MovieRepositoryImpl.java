@@ -21,12 +21,24 @@ public class MovieRepositoryImpl implements MovieRepositoryCustom {
 
 
     @Override
-    public List<Movie> topTypeMovie(String type) {
+    public List<Movie> topMovie() {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("titleType").is("movie"));
+        query.with(new Sort(Sort.Direction.DESC,"totalScore"));
+        query.limit(25);
+
+        List<Movie> movieList = mongoTemplate.find(query,Movie.class);
+
+        return movieList;
+    }
+
+    @Override
+    public List<Movie> highlightTypeMovie(String type) {
         Query query = new Query();
         query.addCriteria(Criteria.where("titleType").is("movie"));
         query.addCriteria(Criteria.where("genres").regex(type));
-        query.with(new Sort(Sort.Direction.DESC,"averageRating"));
-        query.limit(25);
+        query.with(new Sort(Sort.Direction.DESC,"startYear","numVotes"));
+        query.limit(24);
 
         List<Movie> movieList = mongoTemplate.find(query,Movie.class);
 

@@ -16,7 +16,12 @@ public class SearchController {
     ISearchService searchService;
 
     @RequestMapping(value = "/movie",method = RequestMethod.GET)
-    ResponseResult searchMovie(@RequestParam(value = "text") String text){
+    public ResponseResult searchMovie(@RequestParam(value = "text") String text){
         return searchService.processSearchMovie(text);
+    }
+
+    @RequestMapping(value = "/reset-data",method = RequestMethod.GET)
+    public String resetData(){
+        return searchService.resetData();
     }
 }

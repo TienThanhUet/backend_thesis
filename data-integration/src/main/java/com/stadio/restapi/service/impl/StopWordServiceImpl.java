@@ -31,7 +31,7 @@ public class StopWordServiceImpl implements IStopwordService {
         int page = 0;
         while (page<=pageQuantity){
             List<Movie> movieList = movieRepository.findAll(new PageRequest(page,pageSize)).getContent();
-            movieList.stream().forEach(movie -> {
+            movieList.parallelStream().forEach(movie -> {
                 String storyLine = movie.getStoryline();
                 
                 if(storyLine != null && !storyLine.equals("")) {

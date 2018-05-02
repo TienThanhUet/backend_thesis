@@ -10,7 +10,8 @@ public class RedisConst
     public static final int DB_MOVIE = 1;
     public static final int DB_ARTIST = 2;
 
-    public static final String MOVIE_TOP = "movie_top_";
+    public static final String MOVIE_TOP = "movie_top";
+    public static final String MOVIE_HIGHLIGHT = "movie_highlight_";
     public static final String MOVIE_DETAILS = "movie_details";
 
     public static final String ARTIST_DETAILS = "artist_details";

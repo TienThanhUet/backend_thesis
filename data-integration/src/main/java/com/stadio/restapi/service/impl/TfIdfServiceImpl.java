@@ -42,7 +42,8 @@ public class TfIdfServiceImpl implements ITfIdfService {
         int page = 0;
         while (page<=pageQuantity){
             List<MovieStopWord> movieList = movieStopWordRepository.findAll(new PageRequest(page,pageSize)).getContent();
-            movieList.forEach(movieStopWord -> {
+            //not pararell becase have idx duplicate
+            movieList.stream().forEach(movieStopWord -> {
                 String tconst = movieStopWord.getTconst();
                 String storyline =  movieStopWord.getStoryStandard().trim();
                 String title = movieStopWord.getTitle().trim();
@@ -165,7 +166,7 @@ public class TfIdfServiceImpl implements ITfIdfService {
         int page = 0;
         while (page<=pageQuantity){
             List<Word> wordList = wordRepository.findAll(new PageRequest(page,pageSize)).getContent();
-            wordList.forEach(word -> {
+            wordList.parallelStream().forEach(word -> {
                 long docAppear = word.getDocAppear();// so tai lieu co tu xuat hien
                 double idf = Math.log10(1.0+movieQuantity/(docAppear*1.0));
                 word.setIdf(idf);
@@ -186,7 +187,7 @@ public class TfIdfServiceImpl implements ITfIdfService {
         int page = 0;
         while (page<=pageQuantity){
             List<MovieStopWord> movieList = movieStopWordRepository.findAll(new PageRequest(page,pageSize)).getContent();
-            movieList.forEach(movieStopWord -> {
+            movieList.parallelStream().forEach(movieStopWord -> {
                 MovieTfIdf movieTfIdf = new MovieTfIdf();
 
                 String tconst = movieStopWord.getTconst();

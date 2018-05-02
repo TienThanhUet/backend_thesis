@@ -6,8 +6,12 @@ public interface IMovieService {
 
     ResponseResult processGetMovie(String tconst);
 
-    ResponseResult topMovieType(String type);
+    ResponseResult topMovie();
+
+    ResponseResult getMovieTypeHighlight(String type);
 
     ResponseResult listMovieType(Integer page, Integer pageSize,String type);
+
+    ResponseResult calculateTotalScore();
 
 }

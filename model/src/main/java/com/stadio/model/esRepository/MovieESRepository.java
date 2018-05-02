@@ -11,5 +11,10 @@ import java.util.List;
 public interface MovieESRepository extends ElasticsearchRepository<MovieES,String> {
     List<MovieES> findByPrimaryTitle(String text);
 
+    Page<MovieES> findByPrimaryTitleIsLike(String text, Pageable pageable);
+
     Page<MovieES> findByPrimaryTitleIsLikeOrderByNumVotesDesc(String text, Pageable pageable);
+
+    Page<MovieES> findByPrimaryTitleMatches(String text, Pageable pageable);
+
 }

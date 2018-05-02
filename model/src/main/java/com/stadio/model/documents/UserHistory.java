@@ -6,27 +6,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.Objects;
 
 @Data
-@Document(collection = "tab_comment")
-public class Comment {
+@Document(collection = "tab_user_history")
+public class UserHistory {
 
     @Id
     private String id;
 
+    @Field(value = "user_id_ref")
+    private String userId;
+
     @Field(value = "tconst")
     private String tconst;
-
-    @Field(value = "username")
-    private String username;
-
-    @Field(value = "content")
-    private String content;
 
     @Field(value = "createDate")
     private Date createDate;
 
-    @Field(value = "users_reply")
-    private Map<String,Integer> usersReply;
+    public boolean equalsMovieHistory(UserHistory o) {
+        return Objects.equals(tconst, o.tconst);
+    }
 }

@@ -17,4 +17,8 @@ public interface IUserService
     ResponseResult processGetProfileUser(String id);
 
     ResponseResult processUpdateUser(UserDTO userDTO);
+
+    ResponseResult getMovieHistory(String token);
+
+    ResponseResult addMovieHistory(String tconst, String token);
 }
