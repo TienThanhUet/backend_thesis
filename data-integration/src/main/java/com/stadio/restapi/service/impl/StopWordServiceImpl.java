@@ -1,7 +1,12 @@
 package com.stadio.restapi.service.impl;
 
+import com.stadio.model.documents.Artist;
 import com.stadio.model.documents.Movie;
+import com.stadio.model.documents.MovieArtist;
 import com.stadio.model.documents.MovieStopWord;
+import com.stadio.model.dtos.MovieArtistItemDTO;
+import com.stadio.model.repository.ArtistRepository;
+import com.stadio.model.repository.MovieArtistRepository;
 import com.stadio.model.repository.MovieRepository;
 import com.stadio.model.repository.MovieStopWordRepository;
 import com.stadio.restapi.service.IStopwordService;
@@ -10,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -20,6 +26,12 @@ public class StopWordServiceImpl implements IStopwordService {
 
     @Autowired
     MovieStopWordRepository movieStopWordRepository;
+
+    @Autowired
+    MovieArtistRepository movieArtistRepository;
+
+    @Autowired
+    ArtistRepository artistRepository;
 
     @Override
     public void removeStopWord() {
@@ -36,22 +48,22 @@ public class StopWordServiceImpl implements IStopwordService {
                 
                 if(storyLine != null && !storyLine.equals("")) {
 
+                    //storyline
                     storyLine = storyLine.replaceAll("[^a-zA-Z0-9]", " ").toLowerCase();
                     String[] wordList = storyLine.split("\\s+");
-
                     StringBuilder storyLineStopWordBuilder = new StringBuilder();
                     for (int pos = 0; pos < wordList.length; pos++) {
                         int have = stopWordsList.indexOf(wordList[pos]);
                         if (have == -1) storyLineStopWordBuilder.append(wordList[pos] + " ");
                     }
-
-                    //kiem tra storyline co bi trong
                     String storyLineStopWord = storyLineStopWordBuilder.toString().trim();
                     if(storyLineStopWord.equals(""))
                         return;// khong luu phim co storyline la rong
 
+                    //genres
                     String genres = movie.getGenres().replaceAll(",", " ");
 
+                    //title
                     String title = movie.getPrimaryTitle().replaceAll("[^a-zA-Z0-9]", " ").toLowerCase();
                     String[] titleList = title.split("\\s+");
                     StringBuilder titleStopWordBuilder = new StringBuilder();
@@ -59,11 +71,32 @@ public class StopWordServiceImpl implements IStopwordService {
                         int have = stopWordsList.indexOf(titleList[pos]);
                         if(have ==-1) titleStopWordBuilder.append(titleList[pos]+" ");
                     }
-
                     String titleStopWord = titleStopWordBuilder.toString().trim();
                     if(titleStopWord.equals(""))
                         return;
 
+                    //artist
+                    StringBuilder artistStopWordBuilder=new StringBuilder();
+
+                    List<String> categoryList = new LinkedList<>();
+                    categoryList.add("actor");
+                    categoryList.add("actress");
+                    List<MovieArtist> movieArtistList = movieArtistRepository.findByTconstAndCategoryIn(movie.getTconst(),categoryList);
+                    if(!movieArtistList.isEmpty()) {
+                        movieArtistList.stream().forEach(movieArtist -> {
+                            Artist artist = artistRepository.findFirstByNconst(movieArtist.getNconst());
+                            if (artist != null) {
+                                String nameArtist = artist.getPrimaryName();
+                                nameArtist= nameArtist.replaceAll("[^a-zA-Z0-9]", " ").toLowerCase().replaceAll("\\s+","_");
+                                artistStopWordBuilder.append(nameArtist+" ");
+
+                            }
+                        });
+                    }
+
+                    String artistStopWord = artistStopWordBuilder.toString().trim();
+
+                    //create movie stopword
                     String tconst = movie.getTconst();
                     MovieStopWord movieStopWord = new MovieStopWord();
 
@@ -71,6 +104,7 @@ public class StopWordServiceImpl implements IStopwordService {
                     movieStopWord.setTconst(tconst);
                     movieStopWord.setTitle(titleStopWord);
                     movieStopWord.setGenres(genres.trim());
+                    movieStopWord.setArtists(artistStopWord);
                     movieStopWord.setStoryStandard(storyLineStopWord);
 
                     movieStopWordRepository.save(movieStopWord);
@@ -78,6 +112,7 @@ public class StopWordServiceImpl implements IStopwordService {
             });
             //increment page
             page+=1;
+            System.out.println("log: page "+page);
         }
     }
 

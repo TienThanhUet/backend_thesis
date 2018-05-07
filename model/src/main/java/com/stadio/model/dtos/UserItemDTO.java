@@ -12,6 +12,7 @@ public class UserItemDTO
     private String id;
     private String username;
     private String email;
+    private String fullname;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss dd/MM/yyyy")
     private Date createdDate;
@@ -21,6 +22,7 @@ public class UserItemDTO
         this.email = user.getEmail();
         this.username = user.getUsername();
         this.createdDate = user.getCreatedDate();
+        this.fullname = user.getFullname();
 
     }
 }

@@ -3,11 +3,10 @@ package com.stadio.restapi.service.impl;
 
 import com.stadio.common.service.PasswordService;
 import com.stadio.common.utils.ResponseCode;
-import com.stadio.common.utils.RoleType;
 import com.stadio.common.utils.StringUtils;
 import com.stadio.model.documents.Movie;
-import com.stadio.model.documents.User;
 import com.stadio.model.documents.SSOAccessToken;
+import com.stadio.model.documents.User;
 import com.stadio.model.documents.UserHistory;
 import com.stadio.model.dtos.MovieItemDTO;
 import com.stadio.model.dtos.UserDTO;
@@ -20,7 +19,10 @@ import com.stadio.restapi.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -51,7 +53,6 @@ public class UserService extends BaseService implements IUserService
         
         newUser.setEmail(userDTO.getEmail());
         newUser.setUsername(userDTO.getUsername());
-        newUser.setFullname(userDTO.getFullname());
 
         String noise = new Date().toString() + UUID.randomUUID().toString();
         String hidePass = PasswordService.hidePassword(userDTO.getPassword(), noise);
@@ -167,24 +168,21 @@ public class UserService extends BaseService implements IUserService
             return ResponseResult.newSuccessInstance("add movie to history success");
         }
 
-        UserHistory userHistoryDuplicate=null;
+        boolean exists = false;
         for(int pos=0;pos<userHistoryList.size();pos++){
             if(userHistoryList.get(pos).equalsMovieHistory(userHistory)){
-                userHistoryDuplicate = userHistoryList.get(pos);
+                exists =true;
                 break;
             }
         }
 
-        if(userHistoryDuplicate==null){
-            if(userHistoryList.size()>=50){
+        if(!exists){
+            if(userHistoryList.size()>20){
                 UserHistory userHistoryRemove = userHistoryList.get(userHistoryList.size()-1);
                 userHistoryRepository.delete(userHistoryRemove.getId());
             }
-        }else{
-            userHistoryRepository.delete(userHistoryDuplicate);
+            userHistoryRepository.save(userHistory);
         }
-        userHistoryRepository.save(userHistory);
-
         return ResponseResult.newSuccessInstance("add movie to history success");
     }
 

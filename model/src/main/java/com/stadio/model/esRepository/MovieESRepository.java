@@ -9,12 +9,13 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import java.util.List;
 
 public interface MovieESRepository extends ElasticsearchRepository<MovieES,String> {
-    List<MovieES> findByPrimaryTitle(String text);
-
-    Page<MovieES> findByPrimaryTitleIsLike(String text, Pageable pageable);
 
     Page<MovieES> findByPrimaryTitleIsLikeOrderByNumVotesDesc(String text, Pageable pageable);
 
-    Page<MovieES> findByPrimaryTitleMatches(String text, Pageable pageable);
+    Page<MovieES> findByPrimaryTitleRegexOrderByNumVotesDesc(String text, Pageable pageable);
+
+    Page<MovieES> findByPrimaryTitleMatchesOrderByNumVotesDesc(String text, Pageable pageable);
+
+    Page<MovieES> findByPrimaryTitleNearOrderByNumVotesDesc(String text, Pageable pageable);
 
 }

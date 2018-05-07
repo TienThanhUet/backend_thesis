@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
             user.setPasswordRand(rand);
             user.setPasswordHash(PasswordService.hidePassword("123456a@", rand));
             user.setUsername("root");
+            user.setFullname("root");
             user.setEmail("support@uet.com");
             user.setEnabled(true);
 
@@ -84,6 +85,7 @@ public class UserServiceImpl implements UserService {
             //If not found user
             user = new User();
             user.setUsername(loginDTO.getFacebookId());
+            user.setFullname(loginDTO.getFullname());
             user.setFacebookId(loginDTO.getFacebookId());
             user.setFacebookAccessToken(loginDTO.getAccessToken());
             user.setEmail(loginDTO.getEmail());
@@ -121,6 +123,7 @@ public class UserServiceImpl implements UserService {
             //If not found user
             user = new User();
             user.setUsername(loginDTO.getGoogleId());
+            user.setFullname(loginDTO.getFullname());
             user.setGoogleId(loginDTO.getGoogleId());
             user.setGoogleAccessToken(loginDTO.getAccessToken());
             user.setEmail(loginDTO.getEmail());

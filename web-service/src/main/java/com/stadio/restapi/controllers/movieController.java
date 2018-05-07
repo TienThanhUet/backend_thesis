@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.stadio.restapi.response.ResponseResult;
 import com.stadio.restapi.service.IMovieService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping(value = "/movie")
 public class movieController {
@@ -49,11 +51,22 @@ public class movieController {
 
     @RequestMapping(value = "/movie-type/list",method = RequestMethod.GET)
     public ResponseResult  getListMovieType (
+            HttpServletRequest request,
             @RequestParam(value = "type") String type,
             @RequestParam(value = "page") Integer page,
             @RequestParam(value = "pageSize") Integer pageSize
     ){
-        return movieService.listMovieType(page,pageSize,type);
+        return movieService.listMovieType(page,pageSize,type,this.requestURI(request));
+    }
+
+    @RequestMapping(value = "/tv-show/list",method = RequestMethod.GET)
+    public ResponseResult  getListTvShowType (
+            HttpServletRequest request,
+            @RequestParam(value = "type") String type,
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "pageSize") Integer pageSize
+    ){
+        return movieService.listTvShowType(page,pageSize,type,this.requestURI(request));
     }
 
     //comment
@@ -108,5 +121,12 @@ public class movieController {
     @RequestMapping(value = "/calculate-totalScore",method = RequestMethod.GET)
     public ResponseResult calculateTotalScore(){
         return movieService.calculateTotalScore();
+    }
+
+
+
+    protected String requestURI(HttpServletRequest request)
+    {
+        return request.getRequestURI();
     }
 }

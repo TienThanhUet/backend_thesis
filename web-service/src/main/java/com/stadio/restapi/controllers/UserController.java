@@ -2,6 +2,7 @@ package com.stadio.restapi.controllers;
 
 import com.stadio.model.documents.User;
 import com.stadio.model.dtos.UserDTO;
+import com.stadio.model.dtos.UserItemDTO;
 import com.stadio.restapi.response.ResponseResult;
 import com.stadio.restapi.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,8 @@ public class UserController {
     )
     {
         User user = userService.getCurrentUser(token);
-        return ResponseResult.newInstance("00", "", user);
+        UserItemDTO userDTO = new UserItemDTO(user);
+        return ResponseResult.newInstance("00", "", userDTO);
     }
 
     @RequestMapping(value = "/user-history",method = RequestMethod.GET)

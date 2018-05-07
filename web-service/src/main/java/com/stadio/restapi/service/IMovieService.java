@@ -10,7 +10,9 @@ public interface IMovieService {
 
     ResponseResult getMovieTypeHighlight(String type);
 
-    ResponseResult listMovieType(Integer page, Integer pageSize,String type);
+    ResponseResult listMovieType(Integer page, Integer pageSize,String type,String uri);
+
+    ResponseResult listTvShowType(Integer page, Integer pageSize,String type,String uri);
 
     ResponseResult calculateTotalScore();
 

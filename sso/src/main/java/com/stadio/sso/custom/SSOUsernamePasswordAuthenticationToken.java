@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import javax.validation.constraints.NotNull;
 
+
 public class SSOUsernamePasswordAuthenticationToken extends UsernamePasswordAuthenticationToken {
 
 
@@ -18,6 +19,8 @@ public class SSOUsernamePasswordAuthenticationToken extends UsernamePasswordAuth
 
     @NotNull
     private String username;
+
+    private String fullname;
 
     @NotNull
     private String password;
@@ -146,4 +149,11 @@ public class SSOUsernamePasswordAuthenticationToken extends UsernamePasswordAuth
         this.loginGoogle = "1".equals(loginGoogle);
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collector;
 
 @Data
@@ -61,5 +62,18 @@ public class MovieTfIdf {
         double lengthPower = tfidfVectorValue.stream().reduce(0.0,(p1, p2) -> p1 + Math.pow(p2,2));
         this.lengthTfIdfVector = Math.sqrt(lengthPower);
         return lengthTfIdfVector;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        MovieTfIdf that = (MovieTfIdf) o;
+        return tconst == that.tconst;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), tconst);
     }
 }

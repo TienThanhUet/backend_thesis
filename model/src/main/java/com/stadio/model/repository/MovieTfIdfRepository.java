@@ -4,5 +4,5 @@ import com.stadio.model.documents.MovieTfIdf;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface MovieTfIdfRepository extends MongoRepository<MovieTfIdf, String> {
-
+    MovieTfIdf findFirstByTconst(String tconst);
 }

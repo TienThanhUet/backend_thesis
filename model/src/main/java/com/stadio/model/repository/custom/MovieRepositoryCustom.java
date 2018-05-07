@@ -12,5 +12,9 @@ public interface MovieRepositoryCustom {
 
     List<Movie> listMovieType(Integer page, Integer pageSize,String type);
 
-    List<Movie> listMovie(int page,int pageSize);
+    long countMovieType(String type);
+
+    List<Movie> listTvShowType(Integer page, Integer pageSize,String type);
+
+    long countTvShowType(String type);
 }

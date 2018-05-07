@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ArtistRepository extends MongoRepository<Artist, String> {
         List<Artist> findByNconst(String nconst);
+
+        Artist findFirstByNconst(String nconst);
 }

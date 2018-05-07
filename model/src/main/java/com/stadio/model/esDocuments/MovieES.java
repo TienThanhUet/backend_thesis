@@ -36,7 +36,7 @@ public class MovieES {
 
     public MovieES(Movie movie) {
         tconst = movie.getTconst();
-        primaryTitle = movie.getPrimaryTitle();
+        primaryTitle = movie.getPrimaryTitle().toLowerCase().replaceAll("\\s+","_");
         image = movie.getImage();
         startYear = movie.getStartYear();
         runtimeMinutes = movie.getRuntimeMinutes();

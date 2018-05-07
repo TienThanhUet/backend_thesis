@@ -13,15 +13,15 @@ public class Constant
 
     public static String VERIFY_ACCCOUNT_KIT_TOKEN_URL = "https://graph.accountkit.com/v1.3/me/";
 
-    public static String FACEBOOK_APP_ID = "1611905259125488";
+    public static String FACEBOOK_APP_ID = "444096426008297";
 
-    public static String FACEBOOK_APP_SECRET = "76e928c8dfaa568982d6ae833a23e327";
+    public static String FACEBOOK_APP_SECRET = "1e4d838ab344d5f4117ae104e9d9058b";
 
     public static String VERIFY_GOOGLE_TOKEN_URL = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=";
 
-    public static String FIREBASE_GOOGLE_IOS_CLIENT_ID = "510065496973-qlms4h4d9i5ocdoec25ogv5afao68o83.apps.googleusercontent.com";
+    public static String FIREBASE_GOOGLE_IOS_CLIENT_ID = "877341147480-o2n7rgo8ig3dgs2n1r80vltctisnibg4.apps.googleusercontent.com";
 
-    public static String FIREBASE_GOOGLE_ANDROID_CLIENT_ID = "510065496973-flrvioosfled5e887nd0sn4f5i2edunc.apps.googleusercontent.com";
+    public static String FIREBASE_GOOGLE_ANDROID_CLIENT_ID = "877341147480-o2n7rgo8ig3dgs2n1r80vltctisnibg4.apps.googleusercontent.com";
 
     public interface Notification
     {

@@ -31,9 +31,8 @@ public class MovieArtistsService implements IMovieArtistsService {
         List<MovieArtistItemDTO> movieArtistItemDTOS = new LinkedList<>();
         if(!movieArtistList.isEmpty()){
             movieArtistList.parallelStream().forEach(movieArtist -> {
-                List<Artist> artists = artistRepository.findByNconst(movieArtist.getNconst());
-                if(!artists.isEmpty()){
-                    Artist artist = artists.get(0);
+                Artist artist = artistRepository.findFirstByNconst(movieArtist.getNconst());
+                if(artist!=null){
                     MovieArtistItemDTO movieArtistItemDTO = new MovieArtistItemDTO();
                     movieArtistItemDTO.setNconst(artist.getNconst());
                     movieArtistItemDTO.setName(artist.getPrimaryName());

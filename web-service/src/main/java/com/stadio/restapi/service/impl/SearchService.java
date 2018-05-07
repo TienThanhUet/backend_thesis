@@ -35,6 +35,7 @@ public class SearchService implements ISearchService {
     @Override
     public ResponseResult processSearchMovie(String text) {
         PageRequest request = new PageRequest(0, 10);
+//        text = text.toLowerCase().replaceAll("\\s+","_");
         List<MovieES> movieESList = movieESRepository.findByPrimaryTitleIsLikeOrderByNumVotesDesc(text,request).getContent();
         List<MovieESItemDTO> movieESItemDTOList = new LinkedList<>();
         List<MovieESItemDTO> result = new ArrayList<>();

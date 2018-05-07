@@ -11,6 +11,8 @@ import com.stadio.model.redisUtils.MovieRedisRepository;
 import com.stadio.model.redisUtils.MovieTopRedisRepository;
 import com.stadio.model.repository.MovieArtistRepository;
 import com.stadio.model.repository.MovieRepository;
+import com.stadio.restapi.model.PageInfo;
+import com.stadio.restapi.response.TableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -106,15 +108,41 @@ public class MovieService extends BaseService implements IMovieService {
     }
 
     @Override
-    public ResponseResult listMovieType(Integer page, Integer pageSize,String type) {
+    public ResponseResult listMovieType(Integer page, Integer pageSize,String type,String uri) {
         List<Movie> movieList = movieRepository.listMovieType(page,pageSize,type);
+        long quantity = movieRepository.countMovieType(type);
+
         List<MovieItemDTO> movieItemDTOList = new LinkedList<>();
         if(movieList!=null){
             movieList.forEach(movie -> {
                 movieItemDTOList.add(MovieItemDTO.with(movie));
             });
         }
-        return ResponseResult.newSuccessInstance(movieItemDTOList);
+
+        PageInfo pageInfo = new PageInfo(page,quantity, pageSize, uri);
+
+        TableList<MovieItemDTO> tableList = new TableList<>(pageInfo, movieItemDTOList);
+
+        return ResponseResult.newSuccessInstance(tableList);
+    }
+
+    @Override
+    public ResponseResult listTvShowType(Integer page, Integer pageSize, String type, String uri) {
+        List<Movie> movieList = movieRepository.listTvShowType(page,pageSize,type);
+        long quantity = movieRepository.countTvShowType(type);
+
+        List<MovieItemDTO> movieItemDTOList = new LinkedList<>();
+        if(movieList!=null){
+            movieList.forEach(movie -> {
+                movieItemDTOList.add(MovieItemDTO.with(movie));
+            });
+        }
+
+        PageInfo pageInfo = new PageInfo(page,quantity, pageSize, uri);
+
+        TableList<MovieItemDTO> tableList = new TableList<>(pageInfo, movieItemDTOList);
+
+        return ResponseResult.newSuccessInstance(tableList);
     }
 
     @Override

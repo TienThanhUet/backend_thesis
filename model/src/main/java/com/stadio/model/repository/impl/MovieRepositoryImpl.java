@@ -37,7 +37,7 @@ public class MovieRepositoryImpl implements MovieRepositoryCustom {
         Query query = new Query();
         query.addCriteria(Criteria.where("titleType").is("movie"));
         query.addCriteria(Criteria.where("genres").regex(type));
-        query.with(new Sort(Sort.Direction.DESC,"startYear","numVotes"));
+        query.with(new Sort(Sort.Direction.DESC,"startYear","totalScore"));
         query.limit(24);
 
         List<Movie> movieList = mongoTemplate.find(query,Movie.class);
@@ -48,6 +48,7 @@ public class MovieRepositoryImpl implements MovieRepositoryCustom {
     @Override
     public List<Movie> listMovieType(Integer page, Integer pageSize,String type) {
         Query query = new Query();
+        query.addCriteria(Criteria.where("titleType").is("movie"));
         query.addCriteria(Criteria.where("genres").regex(type));
         query.with(new Sort(Sort.Direction.DESC,"startYear","numVotes","averageRating"));
         final Pageable pageableRequest = new PageRequest(page - 1, pageSize);
@@ -59,7 +60,32 @@ public class MovieRepositoryImpl implements MovieRepositoryCustom {
     }
 
     @Override
-    public List<Movie> listMovie(int page, int pageSize) {
-        return null;
+    public long countMovieType(String type) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("titleType").is("movie"));
+        query.addCriteria(Criteria.where("genres").regex(type));
+
+        return mongoTemplate.count(query,Movie.class);
+    }
+
+    @Override
+    public List<Movie> listTvShowType(Integer page, Integer pageSize, String type) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("titleType").is(type));
+        query.with(new Sort(Sort.Direction.DESC,"startYear","numVotes","averageRating"));
+        final Pageable pageableRequest = new PageRequest(page - 1, pageSize);
+        query.with(pageableRequest);
+
+        List<Movie> movieList = mongoTemplate.find(query,Movie.class);
+
+        return movieList;
+    }
+
+    @Override
+    public long countTvShowType(String type) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("titleType").is(type));
+
+        return mongoTemplate.count(query,Movie.class);
     }
 }

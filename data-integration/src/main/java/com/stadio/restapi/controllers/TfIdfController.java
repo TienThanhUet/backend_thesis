@@ -23,9 +23,9 @@ public class TfIdfController {
         return "analyze done";
     }
 
-    @RequestMapping(value = "/calcutator")
-    public String calcutatorTfIdf(){
-        tfIdfService.calcutatorTfIdf();
+    @RequestMapping(value = "/calculate")
+    public String calculateTfIdf(){
+        tfIdfService.calculateTfIdf();
         return "analyze done";
     }
 }

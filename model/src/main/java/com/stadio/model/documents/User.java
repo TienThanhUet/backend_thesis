@@ -21,10 +21,16 @@ import java.util.List;
 @Document(collection = "tab_user")
 public class User extends UserBase implements Serializable
 {
+    @Field(value = "full_name")
+    private String fullname;
+
+    @Field(value = "role")
+    private Integer role;
 
     public User() {
         super();
         this.setEnabled(true);
+        this.role = 1;
     }
 
 }

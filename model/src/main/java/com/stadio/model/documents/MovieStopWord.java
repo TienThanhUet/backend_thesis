@@ -24,6 +24,9 @@ public class MovieStopWord {
     @Field(value = "genres")
     private String genres;
 
+    @Field(value = "artists")
+    private String artists;
+
     @Field(value = "story_standard")
     private String storyStandard;
 }

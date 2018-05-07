@@ -5,5 +5,5 @@ public interface ITfIdfService {
 
     void createWordLibrary();
 
-    void calcutatorTfIdf();
+    void calculateTfIdf();
 }

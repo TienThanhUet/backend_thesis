@@ -74,6 +74,14 @@ public class Word {
         }
     }
 
+    public void incrementCountAppearInArtists(String tconst){
+        if(countAppear.containsKey(tconst)){
+            countAppear.put(tconst,countAppear.get(tconst) + 3);
+        }else{
+            countAppear.put(tconst,3);
+        }
+    }
+
     public boolean checkDocAppearWord(String tconst){
         return countAppear.containsKey(tconst);
     }
